@@ -1,0 +1,12 @@
+{
+  "options": {
+    "version": "0.4",
+    "speed": 90,
+    "hideTabBar": true
+  },
+  "urls": [
+    { "title": "Page One", "url": "https://example.com/one/" },
+    { "title": "Page Two", "url": "https://example.com/two/" },
+    { "title": "Page Three", "url": "https://example.com/three/" }
+  ]
+}

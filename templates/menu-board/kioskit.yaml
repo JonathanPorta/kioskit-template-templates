@@ -1,0 +1,20 @@
+# Rotating menu/wallboard for FullPageOS devices
+version: 1
+kind: kioskit.config
+apply:
+  files:
+    # The rotating list of pages FullPageDashboard cycles through.
+    - source: files/var/www/html/FullPageDashboard/urls.json
+      target: /var/www/html/FullPageDashboard/urls.json
+      mode: "0644"
+      owner: root
+      group: root
+      restart:
+        - fullpagedashboard
+    # Device hostname. {{hostname}} is substituted from the device record on claim.
+    - source: files/etc/hostname
+      target: /etc/hostname
+      mode: "0644"
+      owner: root
+      group: root
+      reboot_required: true
