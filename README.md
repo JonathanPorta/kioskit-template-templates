@@ -1,40 +1,32 @@
 # kioskit-template-templates
 
-Starter **template repository** for [Kioskit](https://kioskit.io). Create your own
-copy from this one with GitHub's **"Use this template"** button, then connect it as
-your *template repo* in the Kioskit console.
+Starter **templates repo** for [Kioskit](https://kioskit.io), reusable device configs.
 
-## What's in here
+## Setup
 
-Each directory under `templates/` is one reusable device config. Kioskit copies one
-into a device when you claim it, rendering it to `src/devices/<mac>/` in your **state
-repo** as a pull request.
+1. Click **Use this template** to create your own copy.
+2. Connect it as your templates repo in the Kioskit console.
+
+## How it works
+
+Each folder under `templates/` is one device config. When you claim a device, Kioskit
+renders the template you pick into your state repo as a PR.
 
 ```
-templates/
-  menu-board/
-    kioskit.yaml                              # manifest — what files go where on the device
-    files/
-      var/www/html/FullPageDashboard/urls.json  # the rotating list of pages
-      etc/hostname                              # device hostname ({{hostname}} is filled in on claim)
+templates/menu-board/
+  kioskit.yaml          # which files go where on the device
+  files/                # file contents, mirroring their device paths
 ```
 
-## The `menu-board` template
+`menu-board` is a rotating wallboard for FullPageOS. Edit its `urls.json` to list your
+own pages.
 
-A rotating menu/wallboard for Raspberry Pis running **FullPageOS + FullPageDashboard**.
-Edit `urls.json` to point at your own pages. On claim, Kioskit writes:
+## Adding a template
 
-| Source (in this repo)                            | Target (on the device)                       |
-| ------------------------------------------------ | -------------------------------------------- |
-| `files/var/www/html/FullPageDashboard/urls.json` | `/var/www/html/FullPageDashboard/urls.json`  |
-| `files/etc/hostname`                             | `/etc/hostname`                              |
+1. Copy `templates/menu-board/` to `templates/<name>/`.
+2. List each file in `kioskit.yaml` under `apply.files[]` with its `target`, `mode`,
+   `owner` and `group`.
+3. Put the contents under `files/`, at the same path as on the device.
 
-## Adding your own template
-
-1. Copy `templates/menu-board/` to `templates/<your-name>/`.
-2. Edit `kioskit.yaml` — list every file under `apply.files[]` with its `target`,
-   `mode`, `owner`, and `group`.
-3. Put the file contents under `files/…`, mirroring their absolute device paths.
-
-Only `{{display_name}}`, `{{primary_mac}}`, and `{{hostname}}` may be substituted.
-No `exec`/`command`/`script`/`shell`/`secret` fields are allowed.
+Only `{{display_name}}`, `{{primary_mac}}` and `{{hostname}}` are substituted. Commands
+and secrets aren't allowed.
