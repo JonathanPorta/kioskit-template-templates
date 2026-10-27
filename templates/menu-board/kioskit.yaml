@@ -9,8 +9,9 @@ apply:
       mode: "0644"
       owner: root
       group: root
-      restart:
-        - fullpagedashboard
+      # No restart: FullPageOS has no fullpagedashboard unit, and a missing
+      # restart unit fails the apply. Any changed file makes the agent reboot
+      # once, and FullPageDashboard reads urls.json at startup.
     # Device hostname. {{hostname}} is substituted from the device record on claim.
     - source: files/etc/hostname
       target: /etc/hostname
